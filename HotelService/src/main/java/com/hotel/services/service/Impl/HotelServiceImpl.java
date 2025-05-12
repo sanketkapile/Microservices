@@ -1,8 +1,8 @@
-package com.hotel.entity.services.service.Impl;
+package com.hotel.services.service.Impl;
 
-import com.hotel.entity.exceptionHandler.ResourceNotFoundException;
+import com.hotel.exceptionHandler.ResourceNotFoundException;
 import com.hotel.entity.Hotel;
-import com.hotel.entity.services.HotelService;
+import com.hotel.services.HotelService;
 import com.hotel.repository.HotelRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

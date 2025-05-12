@@ -1,7 +1,7 @@
-package com.hotel.entity.controller;
+package com.hotel.controller;
 
 import com.hotel.entity.Hotel;
-import com.hotel.entity.services.HotelService;
+import com.hotel.services.HotelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
