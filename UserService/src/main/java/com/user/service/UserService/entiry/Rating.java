@@ -5,11 +5,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.function.IntFunction;
+
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Rating {
+public class Rating extends ArrayList<Rating> {
 
     private String ratingId;
 
@@ -21,4 +24,10 @@ public class Rating {
 
     private String feedback;
 
+    private Hotel hotel;
+
+    @Override
+    public <T> T[] toArray(IntFunction<T[]> generator) {
+        return super.toArray(generator);
+    }
 }

@@ -1,4 +1,4 @@
-package com.hotel.entity.exceptionHandler;
+package com.hotel.exceptionHandler;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

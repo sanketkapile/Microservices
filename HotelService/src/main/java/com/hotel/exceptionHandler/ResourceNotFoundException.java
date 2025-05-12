@@ -1,4 +1,4 @@
-package com.hotel.entity.exceptionHandler;
+package com.hotel.exceptionHandler;
 
 public class ResourceNotFoundException extends RuntimeException {
 
