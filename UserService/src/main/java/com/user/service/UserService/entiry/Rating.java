@@ -12,13 +12,13 @@ import java.util.function.IntFunction;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Rating extends ArrayList<Rating> {
+public class Rating{
 
     private String ratingId;
 
     private String userId;
 
-    private String hotelId;
+    private String id;
 
     private Integer rating;
 
@@ -26,8 +26,4 @@ public class Rating extends ArrayList<Rating> {
 
     private Hotel hotel;
 
-    @Override
-    public <T> T[] toArray(IntFunction<T[]> generator) {
-        return super.toArray(generator);
-    }
 }

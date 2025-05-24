@@ -8,12 +8,11 @@ import com.user.service.UserService.exception.ResourceNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.web.client.RestClientBuilderConfigurer;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import java.net.http.HttpClient;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
@@ -29,6 +28,8 @@ public class UserServiceImpl implements UserService {
     private RestTemplate restTemplate;
 
     private Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
+    @Autowired
+    private RestClientBuilderConfigurer restClientBuilderConfigurer;
 
     @Override
     public User saveUser(User user) {
@@ -48,9 +49,21 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findById(userId).orElseThrow(()-> new ResourceNotFoundException("User Not found "+userId));
 
         //get rating for above user
-        ArrayList<Rating> ratingOfUser = restTemplate.getForObject("http://localhost:5003/ratings/users/" + user.getUserId(), ArrayList.class);
+        Rating[] ratingOfUser = restTemplate.getForObject("http://RATINGSERVICE/ratings/users/"+user.getUserId(), Rating[].class);
         logger.info("{}",ratingOfUser);
-        user.setRatings(ratingOfUser);
+
+        List<Rating> ratings = Arrays.stream(ratingOfUser).toList();
+
+        List<Rating> ratingList = ratings.stream().map(rating -> {
+            ResponseEntity<Hotel> forEntity = restTemplate.getForEntity("http://HOTELSERVICE/hotels/" + rating.getId(), Hotel.class);
+            Hotel hotel = forEntity.getBody();
+            logger.info("Hotel Response code for hotelId {}: ", forEntity.getStatusCodeValue());
+            rating.setHotel(hotel);
+            return rating;
+        }).collect(Collectors.toList());
+
+        user.setRatings(ratingList);
+
         return user;
 
     }
